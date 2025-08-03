@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EASY EARN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      padding-bottom: 50px;
+    }
+    .header {
+      text-align: center;
+      padding: 25px;
+      font-size: 28px;
+      font-weight: 600;
+      position: relative;
+    }
+    .dev-slide {
+      position: absolute;
+      bottom: -20px;
+      width: 100%;
+      text-align: center;
+      color: yellow;
+      font-size: 14px;
+      animation: slideLeft 15s linear infinite;
+    }
+    @keyframes slideLeft {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    .balance {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 20px;
+      margin: 20px auto;
+      text-align: center;
+      width: 85%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    h3 { margin: 0; font-size: 22px; }
+    .task, .card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px auto;
+      width: 85%;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      font-size: 18px;
+    }
+    .btn {
+      background: #00c6ff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      color: #fff;
+      font-size: 16px;
+      margin-top: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #0072ff;
+    }
+    .footer {
+      position: relative;
+      margin-top: 30px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff, #00c6ff);
+      display: flex;
+      justify-content: space-around;
+      padding: 15px 0;
+      font-size: 20px;
+      border-radius: 20px;
+      width: 85%;
+      margin-left: auto;
+      margin-right: auto;
+      color: #fff;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .footer div {
+      cursor: pointer;
+    }
+    .back-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: #fff;
+      color: #000;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      cursor: pointer;
+      z-index: 999;
+    }
+    .hide { display: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    Easy Earn
+    <div class="dev-slide">Developer by: MD SABBIR HOSSAIN</div>
+  </div>
+
+  <div class="balance" id="balance">Balance: 0 BDT</div>
+
+  <div id="home" class="section">
+    <div class="task">
+      📺 বিজ্ঞাপন দেখুন<br>
+      <button class="btn" onclick="showAd()">বিজ্ঞাপন দেখুন</button>
+    </div>
+    <div class="task">
+      🎮 গেম খেলুন<br>
+      <button class="btn" onclick="openGame()">গেম খেলতে যান</button>
+    </div>
+
+    <!-- Footer moved here -->
+    <div class="footer">
+      <div onclick="showSection('home')">🏠 Home</div>
+      <div onclick="showSection('referral')">📢 Refer</div>
+      <div onclick="showSection('withdraw')">💸 Withdraw</div>
+      <div onclick="showSection('profile')">👤 Profile</div>
+    </div>
+  </div>
+
+  <div id="referral" class="section hide">
+    <div class="back-btn" onclick="goHome()">←</div>
+    <div class="card">
+      <h2>🚀 Referral Program</h2>
+      <p>Your Referral Link</p>
+      <input type="text" id="ref-link" readonly style="width:90%; padding:10px; font-size:16px;"><br>
+      <button class="btn" onclick="shareTelegram()">📲 Share on Telegram</button>
+      <p style="margin-top:20px;">Total Referrals: 0</p>
+    </div>
+  </div>
+
+  <div id="withdraw" class="section hide">
+    <div class="back-btn" onclick="goHome()">←</div>
+    <div class="card">
+      <h2>Withdraw Funds</h2>
+      <p>Available Balance: <span id="availableBalance">0</span> BDT</p>
+      <label>Withdrawal Method</label><br>
+      <select id="method" onchange="updateLabel()">
+        <option value="">Select a method</option>
+        <option value="bkash">বিকাশ</option>
+        <option value="nagad">নগদ</option>
+        <option value="rocket">রকেট</option>
+      </select><br><br>
+      <label>Amount</label><br>
+      <input type="text" value="5000" readonly><br>
+      <label id="account-label">Enter Account Number</label><br>
+      <input type="text" id="account-number"><br>
+      <button class="btn" onclick="submitWithdraw()">Submit Withdrawal</button>
+      <p style="color:yellow; margin-top:10px;">5000 পয়েন্ট = ২০ টাকা</p>
+    </div>
+  </div>
+
+  <div id="profile" class="section hide">
+    <div class="back-btn" onclick="goHome()">←</div>
+    <div class="card">
+      <h2>👤 ইউজার প্রোফাইল</h2>
+      <p>টেলিগ্রাম নাম: Shohoj User</p>
+      <p>দেখা এড সংখ্যা: 0</p>
+      <p>ব্যালেন্স: <span id="profileBalance">0</span> BDT</p>
+      <p>গেম ক্লিক সংখ্যা: 0</p>
+      <p>উইথড্র সংখ্যা: 0</p>
+      <p>উইথড্র মেথড সমূহ: None</p>
+    </div>
+  </div>
+
+  <script>
+    let balance = 0;
+
+    function updateBalanceDisplay() {
+      document.getElementById("balance").innerText = `Balance: ${balance} BDT`;
+      document.getElementById("availableBalance").innerText = balance;
+      document.getElementById("profileBalance").innerText = balance;
+    }
+
+    function showAd() {
+      alert("একটি বিজ্ঞাপন চলছে...");
+      setTimeout(() => {
+        balance += 100;
+        updateBalanceDisplay();
+        alert("আপনি ১০০ পয়েন্ট পেয়েছেন!");
+      }, 3000);
+    }
+
+    function openGame() {
+      window.open("https://poki.com/en/g/subway-surfers#fullscreen", "_blank");
+    }
+
+    function generateDeviceId() {
+      return btoa(navigator.userAgent + Math.random()).substr(0, 10);
+    }
+
+    function shareTelegram() {
+      const link = document.getElementById("ref-link").value;
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(link)}`, "_blank");
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.add('hide'));
+      document.getElementById(id).classList.remove('hide');
+    }
+
+    function goHome() {
+      showSection('home');
+    }
+
+    function updateLabel() {
+      const method = document.getElementById("method").value;
+      const label = document.getElementById("account-label");
+      if (method === "bkash") label.innerText = "বিকাশ নাম্বার দিন";
+      else if (method === "nagad") label.innerText = "নগদ নাম্বার দিন";
+      else if (method === "rocket") label.innerText = "রকেট নাম্বার দিন";
+      else label.innerText = "Enter Account Number";
+    }
+
+    function submitWithdraw() {
+      if (balance < 5000) {
+        alert("আপনার পর্যাপ্ত পয়েন্ট নেই।");
+        return;
+      }
+      balance -= 5000;
+      updateBalanceDisplay();
+      alert("উইথড্র সাকসেসফুল!");
+    }
+
+    window.onload = () => {
+      const deviceId = generateDeviceId();
+      const referralLink = `https://t.me/shohojworld_bot?startapp=${deviceId}`;
+      document.getElementById("ref-link").value = referralLink;
+    }
+  </script>
+</body>
+</html>
